@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grammar Checker</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            color: #2b6777;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #aaa;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 12px;
+            background-color: #2b6777;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #235360;
+        }
+
+        .results {
+            margin-top: 30px;
+        }
+
+        .highlighted .error {
+            background-color: #ffe0e0;
+            border-bottom: 2px solid red;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Grammar Checker</h1>
+        <form method="POST">
+            <textarea name="text" placeholder="Paste your text here..." required>{{ input_text }}</textarea>
+            <button type="submit">Check Grammar</button>
+        </form>
+
+        {% if input_text %}
+        <div class="results">
+            <h2>Original (Errors Highlighted)</h2>
+            <p class="highlighted">{{ original|safe }}</p>
+
+            <h2>Corrected Version</h2>
+            <p>{{ corrected }}</p>
+
+            <h2>Grammar Suggestions</h2>
+            <ul>
+                {% for item in grammar_feedback %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
